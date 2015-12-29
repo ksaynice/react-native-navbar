@@ -29,13 +29,25 @@ const StatusBarShape = {
   showAnimation: PropTypes.oneOf(['fade', 'slide', 'none', ])
 };
 
+const DefaultNavigationBarProps = {
+  statusBar: {
+    style: 'default',
+    hidden: false,
+    hideAnimation: 'slide',
+    showAnimation: 'slide',
+  },
+  title: {
+    title: '',
+  },
+}
+
 function customizeStatusBar(data) {
   if (data.style) {
     StatusBarIOS.setStyle(data.style, true);
   }
   const animation = data.hidden ?
-    (data.hideAnimation || NavigationBar.defaultProps.statusBar.hideAnimation) :
-    (data.showAnimation || NavigationBar.defaultProps.statusBar.showAnimation);
+    (data.hideAnimation || DefaultNavigationBarProps.statusBar.hideAnimation) :
+    (data.showAnimation || DefaultNavigationBarProps.statusBar.showAnimation);
 
   StatusBarIOS.setHidden(data.hidden, animation);
 }
@@ -110,17 +122,5 @@ module.exports = class NavigationBar extends Component {
       PropTypes.shape(TitleShape),
       PropTypes.element,
     ]),
-  }
-
-  static defaultProps = {
-    statusBar: {
-      style: 'default',
-      hidden: false,
-      hideAnimation: 'slide',
-      showAnimation: 'slide',
-    },
-    title: {
-      title: '',
-    },
   }
 }
